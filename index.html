@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dev Support Request</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --border-focus: #3b82f6;
+      --danger: #ef4444;
+      --success: #10b981;
+      --badge-bg: #eff6ff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 2.5rem 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .form-container {
+      background: var(--card-bg);
+      width: 100%;
+      max-width: 560px;
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+      border: 1px solid var(--border);
+    }
+
+    .form-header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .form-header h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .notice-badge {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary);
+      background-color: var(--badge-bg);
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+    }
+
+    .form-group {
+      margin-bottom: 1.35rem;
+    }
+
+    label.field-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: var(--text);
+    }
+
+    .required-marker {
+      color: var(--danger);
+      margin-left: 2px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 0.75rem 0.9rem;
+      font-size: 0.95rem;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background-color: #fff;
+      color: var(--text);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      appearance: none;
+    }
+
+    select {
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 0.85rem center;
+      background-size: 1.1rem;
+      padding-right: 2.2rem;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+      margin-top: 0.35rem;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 0.35rem;
+    }
+
+    .custom-control {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--text);
+      user-select: none;
+    }
+
+    .custom-control input {
+      width: 1.1rem;
+      height: 1.1rem;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .puzzle-box {
+      background: #f1f5f9;
+      padding: 1rem;
+      border-radius: 10px;
+      border: 1px dashed #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .puzzle-box span {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .puzzle-input {
+      width: 80px !important;
+      text-align: center;
+      font-weight: 700;
+      padding: 0.5rem !important;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      padding: 0.85rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.15s ease, transform 0.05s ease;
+      margin-top: 1rem;
+    }
+
+    .submit-btn:hover {
+      background: var(--primary-hover);
+    }
+
+    .submit-btn:active {
+      transform: scale(0.99);
+    }
+
+    /* Modal / Alert Dialog */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(2px);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-card {
+      background: #fff;
+      padding: 1.75rem;
+      border-radius: 12px;
+      max-width: 360px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      animation: pop 0.15s ease-out;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.95); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+      color: var(--danger);
+    }
+
+    .modal-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .modal-btn {
+      background: #0f172a;
+      color: white;
+      padding: 0.55rem 1.4rem;
+      border-radius: 6px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <header class="form-header">
+      <h1>Dev Support Request</h1>
+      <span class="notice-badge">Please allow 72 hours for response</span>
+    </header>
+
+    <form id="devSupportForm" action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT_HERE" method="POST" novalidate>
+
+      <!-- Name Field (Text only) -->
+      <div class="form-group">
+        <label class="field-label" for="userName">Name <span class="required-marker">*</span></label>
+        <input 
+          type="text" 
+          id="userName" 
+          name="name" 
+          placeholder="e.g. Jane Doe" 
+          pattern="^[A-Za-z\s.'-]+$" 
+          required 
+        />
+      </div>
+
+      <!-- Email Field (HTML5 validation) -->
+      <div class="form-group">
+        <label class="field-label" for="userEmail">Email <span class="required-marker">*</span></label>
+        <input 
+          type="email" 
+          id="userEmail" 
+          name="email" 
+          placeholder="you@domain.com" 
+          required 
+        />
+      </div>
+
+      <!-- URL Selection Dropdown -->
+      <div class="form-group">
+        <label class="field-label" for="urlOfInterest">URL of Interest <span class="required-marker">*</span></label>
+        <select id="urlOfInterest" name="url_of_interest" required>
+          <option value="" disabled selected>Select an application</option>
+          <option value="conceptpromptgen.app">conceptpromptgen.app</option>
+          <option value="characterpromptgen.app">characterpromptgen.app</option>
+          <option value="codeacademy.app">codeacademy.app</option>
+          <option value="cmdgen.app">cmdgen.app</option>
+          <option value="supportcontrolhub.com">supportcontrolhub.com</option>
+          <option value="soletraderadmin.app">soletraderadmin.app</option>
+          <option value="retrospacearcade.com">retrospacearcade.com</option>
+          <option value="espressohub.app">espressohub.app</option>
+          <option value="projectpal.app">projectpal.app</option>
+          <option value="30-minute-chef.vercel.app">30-minute-chef.vercel.app</option>
+        </select>
+      </div>
+
+      <!-- Reasons Checkboxes (Multiple Allowed) -->
+      <div class="form-group">
+        <label class="field-label">Reason for Contact <span class="required-marker">*</span></label>
+        <div class="options-grid">
+          <label class="custom-control">
+            <input type="checkbox" name="reason[]" value="Praise/Enquiry" /> Praise / Enquiry
+          </label>
+          <label class="custom-control">
+            <input type="checkbox" name="reason[]" value="Feature Suggestion" /> Feature Suggestion
+          </label>
+          <label class="custom-control">
+            <input type="checkbox" name="reason[]" value="General Feedback" /> General Feedback
+          </label>
+          <label class="custom-control">
+            <input type="checkbox" name="reason[]" value="Bug Report" /> Bug Report
+          </label>
+          <label class="custom-control">
+            <input type="checkbox" name="reason[]" value="Other" /> Other
+          </label>
+        </div>
+      </div>
+
+      <!-- Request Email Response Radio -->
+      <div class="form-group">
+        <label class="field-label">Request a response via email? <span class="required-marker">*</span></label>
+        <div class="radio-group">
+          <label class="custom-control">
+            <input type="radio" name="email_response" value="Yes" required /> Yes
+          </label>
+          <label class="custom-control">
+            <input type="radio" name="email_response" value="No" required /> No
+          </label>
+        </div>
+      </div>
+
+      <!-- Human Verification Checkbox -->
+      <div class="form-group">
+        <label class="custom-control">
+          <input type="checkbox" id="humanCheck" name="is_human" value="Confirmed" required />
+          <span>I am human <span class="required-marker">*</span></span>
+        </label>
+      </div>
+
+      <!-- Puzzle Challenge (7 + 3) -->
+      <div class="form-group">
+        <label class="field-label">Security Puzzle <span class="required-marker">*</span></label>
+        <div class="puzzle-box">
+          <span>Solve: 7 + 3 =</span>
+          <input 
+            type="number" 
+            id="puzzleAnswer" 
+            name="security_puzzle" 
+            class="puzzle-input" 
+            maxlength="2" 
+            placeholder="?" 
+            required 
+          />
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">Send Support Request</button>
+    </form>
+  </div>
+
+  <!-- Failure Notification Modal -->
+  <div class="modal-backdrop" id="errorModal">
+    <div class="modal-card">
+      <h3 id="modalTitle">Try Again</h3>
+      <p id="modalMessage">Please verify all fields and retry.</p>
+      <button class="modal-btn" type="button" onclick="closeModal()">Dismiss</button>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('devSupportForm');
+    const nameInput = document.getElementById('userName');
+    const emailInput = document.getElementById('userEmail');
+    const puzzleInput = document.getElementById('puzzleAnswer');
+    const humanCheck = document.getElementById('humanCheck');
+    const modal = document.getElementById('errorModal');
+    const modalMsg = document.getElementById('modalMessage');
+
+    // Reject non-letter keystrokes immediately on the Name input
+    nameInput.addEventListener('beforeinput', (e) => {
+      if (e.data && !/^[A-Za-z\s.'-]+$/.test(e.data)) {
+        e.preventDefault();
+      }
+    });
+
+    // Restrict puzzle field strictly to 2 characters
+    puzzleInput.addEventListener('input', () => {
+      if (puzzleInput.value.length > 2) {
+        puzzleInput.value = puzzleInput.value.slice(0, 2);
+      }
+    });
+
+    function showModal(message) {
+      modalMsg.textContent = message;
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+
+    // Modal dismiss on click outside
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    form.addEventListener('submit', (e) => {
+      // 1. Text-only Name check
+      const nameVal = nameInput.value.trim();
+      if (!nameVal || !/^[A-Za-z\s.'-]+$/.test(nameVal)) {
+        e.preventDefault();
+        showModal('Please provide a valid name containing letters only.');
+        nameInput.focus();
+        return;
+      }
+
+      // 2. Standard Email check
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(emailInput.value.trim())) {
+        e.preventDefault();
+        showModal('Please provide a valid email address.');
+        emailInput.focus();
+        return;
+      }
+
+      // 3. Dropdown selection check
+      const urlVal = document.getElementById('urlOfInterest').value;
+      if (!urlVal) {
+        e.preventDefault();
+        showModal('Please choose a URL from the dropdown list.');
+        return;
+      }
+
+      // 4. Multiple reasons check (at least one selected)
+      const reasonsChecked = document.querySelectorAll('input[name="reason[]"]:checked');
+      if (reasonsChecked.length === 0) {
+        e.preventDefault();
+        showModal('Please select at least one contact reason.');
+        return;
+      }
+
+      // 5. Email response option check
+      const emailResponseChosen = document.querySelector('input[name="email_response"]:checked');
+      if (!emailResponseChosen) {
+        e.preventDefault();
+        showModal('Please specify whether you request an email response.');
+        return;
+      }
+
+      // 6. Human checkbox
+      if (!humanCheck.checked) {
+        e.preventDefault();
+        showModal('Please check "I am human" to continue.');
+        return;
+      }
+
+      // 7. Math puzzle verification (7 + 3 must equal 10)
+      if (parseInt(puzzleInput.value.trim(), 10) !== 10) {
+        e.preventDefault();
+        showModal('Try Again: The security puzzle solution is incorrect.');
+        puzzleInput.value = '';
+        puzzleInput.focus();
+        return;
+      }
+
+      // Form proceeds to Formspree endpoint if all conditions pass
+    });
+  </script>
+</body>
+</html>
